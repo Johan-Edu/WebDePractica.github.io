@@ -1,0 +1,238 @@
+:root {
+  --primary: #3b82f6;
+  --accent: #8b5cf6;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bg-body: #f9fafb;
+  --border-light: #e5e7eb;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.navbar {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 16px 0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--primary);
+}
+
+.post-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.post-article {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  display: none;
+}
+
+.post-header {
+  padding: 60px 40px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.post-category {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.post-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.post-body {
+  padding: 40px;
+  line-height: 1.8;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+}
+
+.post-footer {
+  padding: 30px 40px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--bg-body);
+  color: var(--text-main);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-back:hover {
+  background: var(--border-light);
+  transform: translateX(-4px);
+}
+
+.btn-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+  transform: translateX(4px);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 80px 20px;
+  color: white;
+}
+
+.loading i {
+  font-size: 3rem;
+  animation: spin 1s linear infinite;
+}
+
+.error i {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+.error h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2rem;
+  margin: 20px 0 12px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .post-header {
+    padding: 40px 20px 30px;
+  }
+  
+  .post-title {
+    font-size: 1.8rem;
+  }
+  
+  .post-body {
+    padding: 30px 20px;
+    font-size: 1rem;
+  }
+  
+  .post-footer {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+}

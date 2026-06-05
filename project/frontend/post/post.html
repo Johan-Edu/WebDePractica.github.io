@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artículo — BlogFlow</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <link rel="stylesheet" href="../auth.css" />
+  <link rel="stylesheet" href="post.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">Blog<span>Flow</span></a>
+      <div id="auth-buttons"></div>
+    </div>
+  </nav>
+
+  <main class="post-container">
+    <article class="post-article" id="post-article"></article>
+
+    <div id="loading" class="loading">
+      <i class="ph ph-spinner animate-spin"></i>
+      <p>Cargando artículo...</p>
+    </div>
+
+    <div id="error" class="error" style="display: none;">
+      <i class="ph ph-warning"></i>
+      <h2>Artículo no encontrado</h2>
+      <p>El artículo que buscas no existe o fue eliminado.</p>
+      <a href="../posts.html" class="btn-back">Volver a artículos</a>
+    </div>
+  </main>
+
+  <script src="../auth.js"></script>
+  <script src="post.js"></script>
+
+</body>
+</html>

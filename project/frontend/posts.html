@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artículos — BlogFlow</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="stylesheet" href="posts.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Blog<span>Flow</span></a>
+      <div id="auth-buttons"></div>
+    </div>
+  </nav>
+
+  <main class="posts-container">
+    <div class="posts-header">
+      <h1>Artículos</h1>
+      <p>Descubre las últimas publicaciones de nuestra comunidad</p>
+    </div>
+
+    <div class="posts-grid" id="posts-grid">
+      <!-- Los posts se cargan dinámicamente -->
+    </div>
+
+    <div id="no-posts" class="no-posts" style="display: none;">
+      <i class="ph ph-article" style="font-size: 4rem; color: white; opacity: 0.5;"></i>
+      <h2>Aún no hay artículos</h2>
+      <p>Sé el primero en crear uno</p>
+      <a href="crear-post.html" class="btn-create">Crear artículo</a>
+    </div>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="posts.js"></script>
+
+</body>
+</html>

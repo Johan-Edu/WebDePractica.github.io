@@ -178,23 +178,6 @@
     </div>
   </section>
 
-  <!-- ========== NEWSLETTER ========== -->
-  <section class="newsletter" id="contacto">
-    <div class="container">
-      <div class="newsletter-box">
-        <div class="newsletter-icon">
-          <i class="ph ph-envelope-simple"></i>
-        </div>
-        <h2>Suscríbete al newsletter</h2>
-        <p>Recibe los mejores artículos directamente en tu correo. Sin spam, lo prometo.</p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="tu@email.com" required />
-          <button type="submit" class="btn btn-primary">Suscribirme</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
   <!-- ========== FOOTER ========== -->
   <footer class="footer">
     <div class="container footer-container">
@@ -227,34 +210,29 @@
   </footer>
 
  <script>
-  // Actualizar navbar según autenticación
-  function updateNav() {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
-    const authButtons = document.getElementById('auth-buttons');
+function updateNav() {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  const authButtons = document.getElementById('auth-buttons');
 
-    if (token && user) {
-      authButtons.innerHTML = `
-        <a href="perfil.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
-          Hola, ${user.name}
-        </a>
-        <button onclick="logout()" class="btn-nav" style="background: #ef4444;">
-          Cerrar sesión
-        </button>
-      `;
-    } else {
-      authButtons.innerHTML = `
-        <a href="login.html" class="btn-nav">Iniciar sesión</a>
-      `;
-    }
+  if (token && user) {
+    authButtons.innerHTML = `
+      <a href="crear-post.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
+        <i class="ph ph-plus-circle"></i> Crear Post
+      </a>
+      <a href="perfil.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
+        Hola, ${user.name}
+      </a>
+      <button onclick="logout()" class="btn-nav" style="background: #ef4444;">
+        Cerrar sesión
+      </button>
+    `;
+  } else {
+    authButtons.innerHTML = `
+      <a href="login.html" class="btn-nav">Iniciar sesión</a>
+    `;
   }
-
-  // Cerrar sesión
-  function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = window.location.origin + '/login.html';
-  }
+}
 
   // Ejecutar al cargar
   updateNav();

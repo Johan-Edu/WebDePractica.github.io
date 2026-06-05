@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Artículo — BlogFlow</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <link rel="stylesheet" href="../auth.css" />
+  <link rel="stylesheet" href="../crear-post.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">Blog<span>Flow</span></a>
+      <div id="auth-buttons"></div>
+    </div>
+  </nav>
+
+  <main class="editor-container">
+    <div class="editor-header">
+      <h1>Editar Artículo</h1>
+      <p>Modifica el contenido de tu artículo</p>
+    </div>
+
+    <form class="editor-form" id="edit-form">
+      <div class="form-group">
+        <label for="title">Título del artículo</label>
+        <input type="text" id="title" placeholder="Ej: Cómo empezar con JavaScript" required maxlength="100" />
+        <div class="char-counter"><span id="title-count">0</span>/100</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category">Categoría</label>
+          <select id="category" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Programación">Programación</option>
+            <option value="Diseño">Diseño</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
+            <option value="Mobile">Mobile</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="gradient">Imagen de portada (opcional)</label>
+          <select id="gradient">
+            <option value="">Sin imagen</option>
+            <option value="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">Gradiente 1</option>
+            <option value="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">Gradiente 2</option>
+            <option value="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">Gradiente 3</option>
+            <option value="linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)">Gradiente 4</option>
+            <option value="linear-gradient(135deg, #fa709a 0%, #fee140 100%)">Gradiente 5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Contenido del artículo</label>
+        <textarea id="content" placeholder="Escribe tu artículo aquí..." required></textarea>
+        <div class="char-counter"><span id="content-count">0</span> caracteres</div>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <i class="ph ph-floppy-disk"></i> Guardar cambios
+        </button>
+        <a href="post/post.html" id="cancel-btn" style="padding: 16px 32px; background: #e5e7eb; color: var(--text-main); text-decoration: none; border-radius: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">
+          <i class="ph ph-x" style="margin-right: 8px;"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </main>
+
+  <script src="../auth.js"></script>
+  <script src="edit-post.js"></script>
+
+</body>
+</html>

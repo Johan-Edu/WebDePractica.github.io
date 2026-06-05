@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlogFlow — Ideas que fluyen</title>
+  
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons (Iconos elegantes y minimalistas) -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">Blog<span>Flow</span></a>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#articulos">Artículos</a></li>
+        <li><a href="#categorias">Categorías</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li id="auth-buttons">
+          <!-- Se llena con JavaScript -->
+        </li>
+      </ul>
+      <button class="menu-toggle" aria-label="Menú">
+        <i class="ph ph-list"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero" id="inicio">
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div> <!-- Textura sutil para quitar lo "plástico" -->
+    <div class="container hero-content">
+      <span class="hero-tag">
+        <i class="ph ph-sparkle"></i> Bienvenido a mi espacio
+      </span>
+      <h1>Ideas que fluyen,<br />historias que inspiran.</h1>
+      <p>
+        Un blog sobre tecnología, diseño y creatividad.
+        Explora artículos, tutoriales y reflexiones para crecer cada día.
+      </p>
+      <div class="hero-buttons">
+        <a href="#articulos" class="btn btn-primary">
+          Leer artículos <i class="ph ph-arrow-right"></i>
+        </a>
+        <a href="#sobre-mi" class="btn btn-outline">
+          Conocer más
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== ARTÍCULOS DESTACADOS ========== -->
+  <section class="featured" id="articulos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Lo más reciente</span>
+        <h2>Artículos destacados</h2>
+        <p>Descubre las últimas publicaciones y no te pierdas ninguna novedad.</p>
+      </div>
+
+      <div class="posts-grid">
+        <!-- Post 1 -->
+        <article class="post-card">
+          <div class="post-image-wrapper">
+            <div class="post-image" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);"></div>
+          </div>
+          <div class="post-content">
+            <span class="post-category">Diseño</span>
+            <h3>Cómo crear interfaces modernas en 2026</h3>
+            <p>Las tendencias de UI/UX que están marcando la pauta este año y cómo aplicarlas en tus proyectos.</p>
+            <div class="post-meta">
+              <span><i class="ph ph-calendar-blank"></i> 5 Jun 2026</span>
+              <span><i class="ph ph-clock"></i> 5 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="post-card">
+          <div class="post-image-wrapper">
+            <div class="post-image" style="background: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);"></div>
+          </div>
+          <div class="post-content">
+            <span class="post-category">Tecnología</span>
+            <h3>Inteligencia artificial en el día a día</h3>
+            <p>Herramientas y trucos para integrar la IA en tu flujo de trabajo y multiplicar tu productividad.</p>
+            <div class="post-meta">
+              <span><i class="ph ph-calendar-blank"></i> 3 Jun 2026</span>
+              <span><i class="ph ph-clock"></i> 8 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="post-card">
+          <div class="post-image-wrapper">
+            <div class="post-image" style="background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);"></div>
+          </div>
+          <div class="post-content">
+            <span class="post-category">Desarrollo</span>
+            <h3>CSS moderno: todo lo que necesitas saber</h3>
+            <p>Grid, flexbox, variables y animaciones. Una guía completa para dominar el CSS actual.</p>
+            <div class="post-meta">
+              <span><i class="ph ph-calendar-blank"></i> 1 Jun 2026</span>
+              <span><i class="ph ph-clock"></i> 12 min</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CATEGORÍAS ========== -->
+  <section class="categories" id="categorias">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Explora</span>
+        <h2>Categorías</h2>
+      </div>
+      <div class="categories-grid">
+        <a href="#" class="category-card">
+          <div class="cat-icon"><i class="ph ph-paint-brush"></i></div>
+          <h3>Diseño</h3>
+          <p>12 artículos</p>
+        </a>
+        <a href="#" class="category-card">
+          <div class="cat-icon"><i class="ph ph-code"></i></div>
+          <h3>Desarrollo</h3>
+          <p>24 artículos</p>
+        </a>
+        <a href="#" class="category-card">
+          <div class="cat-icon"><i class="ph ph-robot"></i></div>
+          <h3>IA & Tech</h3>
+          <p>18 artículos</p>
+        </a>
+        <a href="#" class="category-card">
+          <div class="cat-icon"><i class="ph ph-lightning"></i></div>
+          <h3>Productividad</h3>
+          <p>9 artículos</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SOBRE MÍ ========== -->
+  <section class="about" id="sobre-mi">
+    <div class="container about-container">
+      <div class="about-image">
+        <div class="about-avatar"></div>
+      </div>
+      <div class="about-content">
+        <span class="section-tag">Sobre mí</span>
+        <h2>Hola, soy Alex <i class="ph ph-hand-waving" style="color: #f59e0b;"></i></h2>
+        <p>
+          Soy diseñador y desarrollador apasionado por crear experiencias
+          digitales que marquen la diferencia. En este blog comparto todo lo
+          que aprendo en el camino.
+        </p>
+        <p>
+          Si te gusta el diseño limpio, el código elegante y las ideas que
+          inspiran, estás en el lugar correcto.
+        </p>
+        <a href="#contacto" class="btn btn-primary">
+          Hablemos <i class="ph ph-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEWSLETTER ========== -->
+  <section class="newsletter" id="contacto">
+    <div class="container">
+      <div class="newsletter-box">
+        <div class="newsletter-icon">
+          <i class="ph ph-envelope-simple"></i>
+        </div>
+        <h2>Suscríbete al newsletter</h2>
+        <p>Recibe los mejores artículos directamente en tu correo. Sin spam, lo prometo.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="tu@email.com" required />
+          <button type="submit" class="btn btn-primary">Suscribirme</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <a href="#" class="logo">Blog<span>Flow</span></a>
+        <p>Ideas que fluyen, historias que inspiran.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#articulos">Artículos</a></li>
+          <li><a href="#categorias">Categorías</a></li>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Social</h4>
+        <ul>
+          <li><a href="#"><i class="ph ph-twitter-logo"></i> Twitter</a></li>
+          <li><a href="#"><i class="ph ph-instagram-logo"></i> Instagram</a></li>
+          <li><a href="#"><i class="ph ph-github-logo"></i> GitHub</a></li>
+          <li><a href="#"><i class="ph ph-linkedin-logo"></i> LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BlogFlow. Hecho con <i class="ph-fill ph-heart" style="color: #ef4444;"></i></p>
+    </div>
+  </footer>
+
+  <script>
+    // Actualizar navbar según autenticación
+    function updateNav() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authButtons = document.getElementById('auth-buttons');
+
+      if (token && user) {
+        authButtons.innerHTML = `
+          <span style="color: var(--text-muted); margin-right: 12px;">
+            Hola, ${user.name}
+          </span>
+          <button onclick="logout()" class="btn-nav" style="background: #ef4444;">
+            Cerrar sesión
+          </button>
+        `;
+      } else {
+        authButtons.innerHTML = `
+          <a href="login.html" class="btn-nav">Iniciar sesión</a>
+        `;
+      }
+    }
+
+    // Cerrar sesión
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    }
+
+    // Ejecutar al cargar
+    updateNav();
+  </script>
+
+</body>
+</html>

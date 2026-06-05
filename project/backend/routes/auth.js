@@ -119,4 +119,46 @@ router.get('/profile', authenticateToken, (req, res) => {
   });
 });
 
+// Actualizar perfil
+router.put('/profile', authenticateToken, (req, res) => {
+  const { name, email } = req.body;
+
+  db.run(
+    'UPDATE users SET name = ?, email = ? WHERE id = ?',
+    [name, email, req.user.id],
+    function(err) {
+      if (err) return res.status(500).json({ error: 'Error al actualizar' });
+      res.json({ message: 'Perfil actualizado', user: { id: req.user.id, name, email } });
+    }
+  );
+});
+
+// Cambiar contraseña
+router.put('/password', authenticateToken, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  db.get('SELECT password FROM users WHERE id = ?', [req.user.id], (err, user) => {
+    if (err) return res.status(500).json({ error: 'Error del servidor' });
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    bcrypt.compare(currentPassword, user.password, (err, isMatch) => {
+      if (err) return res.status(500).json({ error: 'Error al verificar contraseña' });
+      if (!isMatch) return res.status(401).json({ error: 'Contraseña actual incorrecta' });
+
+      bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+        if (err) return res.status(500).json({ error: 'Error al procesar contraseña' });
+
+        db.run(
+          'UPDATE users SET password = ? WHERE id = ?',
+          [hashedPassword, req.user.id],
+          function(err) {
+            if (err) return res.status(500).json({ error: 'Error al actualizar' });
+            res.json({ message: 'Contraseña actualizada' });
+          }
+        );
+      });
+    });
+  });
+});
+
 module.exports = router;

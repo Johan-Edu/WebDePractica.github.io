@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil — BlogFlow</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body class="auth-page">
+
+  <div class="auth-background">
+    <div class="auth-grain"></div>
+  </div>
+
+  <a href="index.html" class="auth-logo-link">
+    <span class="logo">Blog<span>Flow</span></span>
+  </a>
+
+  <main class="auth-container">
+    <div class="auth-card profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="ph ph-user"></i>
+        </div>
+        <h1>Mi Perfil</h1>
+        <p>Gestiona tu información personal</p>
+      </div>
+
+      <div class="profile-tabs">
+        <button class="tab-btn active" data-tab="info">
+          <i class="ph ph-user"></i> Información
+        </button>
+        <button class="tab-btn" data-tab="password">
+          <i class="ph ph-lock-key"></i> Contraseña
+        </button>
+      </div>
+
+      <!-- Tab Información -->
+      <div class="tab-content active" id="tab-info">
+        <form class="auth-form" id="profile-form">
+          <div class="input-group">
+            <label for="profile-name">Nombre completo</label>
+            <div class="input-wrapper">
+              <i class="ph ph-user"></i>
+              <input type="text" id="profile-name" placeholder="Tu nombre" required />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="profile-email">Correo electrónico</label>
+            <div class="input-wrapper">
+              <i class="ph ph-envelope-simple"></i>
+              <input type="email" id="profile-email" placeholder="tu@email.com" required />
+            </div>
+          </div>
+
+          <div class="profile-stats">
+            <div class="stat-item">
+              <i class="ph ph-calendar-blank"></i>
+              <div>
+                <strong>Miembro desde</strong>
+                <span id="member-since">Cargando...</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="ph ph-article"></i>
+              <div>
+                <strong>Artículos</strong>
+                <span id="posts-count">0</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            Guardar cambios <i class="ph ph-floppy-disk"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Tab Contraseña -->
+      <div class="tab-content" id="tab-password">
+        <form class="auth-form" id="password-form">
+          <div class="input-group">
+            <label for="current-password">Contraseña actual</label>
+            <div class="input-wrapper">
+              <i class="ph ph-lock-key"></i>
+              <input type="password" id="current-password" placeholder="••••••••" required />
+              <button type="button" class="toggle-password">
+                <i class="ph ph-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="new-password">Nueva contraseña</label>
+            <div class="input-wrapper">
+              <i class="ph ph-lock-key"></i>
+              <input type="password" id="new-password" placeholder="Mínimo 8 caracteres" required />
+              <button type="button" class="toggle-password">
+                <i class="ph ph-eye"></i>
+              </button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bars">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
+              <span class="strength-text">La contraseña es muy débil</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="confirm-password">Confirmar nueva contraseña</label>
+            <div class="input-wrapper">
+              <i class="ph ph-lock-key"></i>
+              <input type="password" id="confirm-password" placeholder="Repite la contraseña" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            Cambiar contraseña <i class="ph ph-lock-key-open"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="profile-footer">
+        <button onclick="logout()" class="btn-logout">
+          <i class="ph ph-sign-out"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="perfil.js"></script>
+
+</body>
+</html>

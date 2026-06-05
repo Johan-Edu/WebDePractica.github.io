@@ -226,39 +226,39 @@
     </div>
   </footer>
 
-  <script>
-    // Actualizar navbar según autenticación
-    function updateNav() {
-      const token = localStorage.getItem('token');
-      const user = JSON.parse(localStorage.getItem('user'));
-      const authButtons = document.getElementById('auth-buttons');
+ <script>
+  // Actualizar navbar según autenticación
+  function updateNav() {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const authButtons = document.getElementById('auth-buttons');
 
-      if (token && user) {
-        authButtons.innerHTML = `
-          <span style="color: var(--text-muted); margin-right: 12px;">
-            Hola, ${user.name}
-          </span>
-          <button onclick="logout()" class="btn-nav" style="background: #ef4444;">
-            Cerrar sesión
-          </button>
-        `;
-      } else {
-        authButtons.innerHTML = `
-          <a href="login.html" class="btn-nav">Iniciar sesión</a>
-        `;
-      }
+    if (token && user) {
+      authButtons.innerHTML = `
+        <a href="perfil.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
+          Hola, ${user.name}
+        </a>
+        <button onclick="logout()" class="btn-nav" style="background: #ef4444;">
+          Cerrar sesión
+        </button>
+      `;
+    } else {
+      authButtons.innerHTML = `
+        <a href="login.html" class="btn-nav">Iniciar sesión</a>
+      `;
     }
+  }
 
-    // Cerrar sesión
-    function logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-    }
+  // Cerrar sesión
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = window.location.origin + '/login.html';
+  }
 
-    // Ejecutar al cargar
-    updateNav();
-  </script>
+  // Ejecutar al cargar
+  updateNav();
+</script>
 
 </body>
 </html>

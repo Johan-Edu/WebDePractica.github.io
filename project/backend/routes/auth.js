@@ -161,4 +161,149 @@ router.put('/password', authenticateToken, (req, res) => {
   });
 });
 
+const nodemailer = require('nodemailer');
+
+// Configurar transporter de email (para desarrollo usamos Ethereal)
+const createTransporter = () => {
+  return nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+      user: 'tu-email-test@ethereal.email',  // ← Reemplazar con cuenta real de Ethereal
+      pass: 'tu-password'
+    }
+  });
+  
+  // O para producción (Gmail):
+  // return nodemailer.createTransport({
+  //   service: 'gmail',
+  //   auth: {
+  //     user: process.env.EMAIL_USER,
+  //     pass: process.env.EMAIL_PASS
+  //   }
+  // });
+};
+
+// Solicitar recuperación de contraseña
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email es requerido' });
+  }
+
+  db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
+    if (err) return res.status(500).json({ error: 'Error del servidor' });
+    
+    // Si no existe el usuario, no decimos nada (seguridad)
+    if (!user) {
+      return res.json({ message: 'Si el email existe, se ha enviado un enlace de recuperación' });
+    }
+
+    // Generar token único
+    const crypto = require('crypto');
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiry = Date.now() + 3600000; // 1 hora
+
+    // Guardar token en la base de datos
+    db.run(
+      'UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?',
+      [resetToken, resetTokenExpiry, user.id],
+      async (err) => {
+        if (err) return res.status(500).json({ error: 'Error al generar token' });
+
+        // Crear enlace de recuperación
+     const frontendUrl = process.env.CODESPACE_NAME ? 
+      `https://${process.env.CODESPACE_NAME}-3000.app.github.dev` : 
+  `   ${req.protocol}://${req.get('host')}`;
+  
+  const baseUrl = req.headers['x-forwarded-proto'] ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}` : `${req.protocol}://${req.get('host')}`;
+const resetLink = `${baseUrl}/reset-password.html?token=${resetToken}`;
+
+        // Configurar email
+        const transporter = createTransporter();
+        
+        const mailOptions = {
+          from: 'BlogFlow <noreply@blogflow.com>',
+          to: user.email,
+          subject: 'Recuperación de contraseña - BlogFlow',
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4;">
+              <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px;">
+                <h1 style="color: #3b82f6;">BlogFlow</h1>
+                <h2>Recuperación de contraseña</h2>
+                <p>Hola ${user.name},</p>
+                <p>Has solicitado restablecer tu contraseña. Haz clic en el botón de abajo:</p>
+                <a href="${resetLink}" style="display: inline-block; padding: 12px 24px; background: #3b82f6; color: white; text-decoration: none; border-radius: 6px; margin: 20px 0;">
+                  Restablecer contraseña
+                </a>
+                <p>O copia este enlace en tu navegador:</p>
+                <p style="word-break: break-all; color: #666;">${resetLink}</p>
+                <p style="color: #999; font-size: 12px; margin-top: 30px;">
+                  Este enlace expira en 1 hora. Si no solicitaste esto, ignora este email.
+                </p>
+              </div>
+            </div>
+          `
+        };
+
+        try {
+          // Enviar email
+          await transporter.sendMail(mailOptions);
+          console.log('✅ Email de recuperación enviado a:', user.email);
+          
+          res.json({ message: 'Si el email existe, se ha enviado un enlace de recuperación' });
+        } catch (error) {
+          console.error('Error enviando email:', error);
+          // Para desarrollo: mostrar el link en consola
+          console.log('🔗 Enlace de recuperación:', resetLink);
+          res.json({ 
+            message: 'Enlace de recuperación generado (revisa la consola del backend)',
+            resetLink: process.env.NODE_ENV === 'development' ? resetLink : undefined
+          });
+        }
+      }
+    );
+  });
+});
+
+// Restablecer contraseña
+router.post('/reset-password', (req, res) => {
+  const { token, newPassword } = req.body;
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ error: 'Token y nueva contraseña son requeridos' });
+  }
+
+  if (newPassword.length < 8) {
+    return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
+  }
+
+  const bcrypt = require('bcryptjs');
+
+  db.get(
+    'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > ?',
+    [token, Date.now()],
+    async (err, user) => {
+      if (err) return res.status(500).json({ error: 'Error del servidor' });
+      if (!user) {
+        return res.status(400).json({ error: 'Token inválido o expirado' });
+      }
+
+      // Hashear nueva contraseña
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Actualizar contraseña y limpiar token
+      db.run(
+        'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE id = ?',
+        [hashedPassword, user.id],
+        (err) => {
+          if (err) return res.status(500).json({ error: 'Error al actualizar contraseña' });
+          res.json({ message: 'Contraseña actualizada exitosamente' });
+        }
+      );
+    }
+  );
+});
+
 module.exports = router;

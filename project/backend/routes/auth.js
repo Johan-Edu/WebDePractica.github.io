@@ -38,12 +38,11 @@ router.post('/register',
           function(err) {
             if (err) return res.status(500).json({ error: 'Error al crear usuario' });
 
-            // Generar token
             const token = jwt.sign(
-              { id: this.lastID, email },
-              JWT_SECRET,
-              { expiresIn: '7d' }
-            );
+             { id: this.lastID, email, role: 'user' },  // ← Agregar role
+                  JWT_SECRET,
+                   { expiresIn: '7d' }
+              );
 
             res.status(201).json({
               message: 'Usuario creado exitosamente',
@@ -80,17 +79,16 @@ router.post('/login',
         if (err) return res.status(500).json({ error: 'Error al verificar contraseña' });
         if (!isMatch) return res.status(401).json({ error: 'Credenciales inválidas' });
 
-        // Generar token
-        const token = jwt.sign(
-          { id: user.id, email: user.email },
-          JWT_SECRET,
-          { expiresIn: '7d' }
-        );
+                  const token = jwt.sign(
+                 { id: user.id, email: user.email, role: user.role },  // ← Agregar role
+              JWT_SECRET,
+              { expiresIn: '24h' }
+                     );
 
         res.json({
           message: 'Login exitoso',
           token,
-          user: { id: user.id, name: user.name, email: user.email }
+          usrer: { id: user.id, name: user.name, email: user.email }
         });
       });
     });
@@ -99,14 +97,29 @@ router.post('/login',
 
 // Middleware para proteger rutas
 const authenticateToken = (req, res, next) => {
+  console.log('🔍 Token middleware ejecutándose');
+  console.log('🔍 Headers:', req.headers['authorization']);
+  
   const token = req.headers['authorization']?.split(' ')[1];
+  console.log('🔍 Token extraído:', token ? 'SÍ' : 'NO');
 
-  if (!token) return res.status(401).json({ error: 'Token requerido' });
+  if (!token) {
+    console.log('❌ Token no proporcionado');
+    return res.status(401).json({ error: 'Token requerido' });
+  }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Token inválido' });
-    req.user = user;
-    next();
+    
+    // Obtener el role del usuario desde la BD
+    db.get('SELECT role FROM users WHERE id = ?', [decoded.id], (err, user) => {
+      if (err) return res.status(500).json({ error: 'Error del servidor' });
+      if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+      
+      // Agregar el role al user
+      req.user = { ...decoded, role: user.role };
+      next();
+    });
   });
 };
 

@@ -166,3 +166,38 @@ function logout() {
   localStorage.removeItem('user');
   window.location.href = 'login.html';
 }
+
+// Login con GitHub
+function loginWithGitHub() {
+  window.location.href = '/api/auth/github';
+}
+
+// Procesar OAuth al regresar
+function processOAuthLogin() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+  const user = urlParams.get('user');
+  
+  if (token && user) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', user);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    if (typeof updateNav === 'function') {
+      updateNav();
+    }
+  }
+}
+
+// Ejecutar al cargar
+if (typeof window !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    processOAuthLogin();
+  });
+}
+
+// Cerrar sesión
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = 'index.html';
+}

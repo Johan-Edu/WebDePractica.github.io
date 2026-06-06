@@ -17,6 +17,16 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// Middleware para verificar roles
+const checkRole = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ error: 'No tienes permisos suficientes' });
+    }
+    next();
+  };
+};
+
 // Obtener todos los posts
 router.get('/', (req, res) => {
   db.all(`
@@ -27,6 +37,14 @@ router.get('/', (req, res) => {
   `, [], (err, posts) => {
     if (err) return res.status(500).json({ error: 'Error al obtener posts' });
     res.json(posts);
+  });
+});
+
+// Contar posts del usuario autenticado
+router.get('/my-count', authenticateToken, (req, res) => {
+  db.get('SELECT COUNT(*) as count FROM posts WHERE author_id = ?', [req.user.id], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error al contar posts' });
+    res.json({ count: result.count });
   });
 });
 
@@ -119,6 +137,25 @@ router.post('/:id/comments',
 // Actualizar un post (requiere autenticación)
 router.put('/:id',
   authenticateToken,
+  (req, res, next) => {
+    // Verificar si es owner, admin, o el autor del post
+    db.get('SELECT author_id FROM posts WHERE id = ?', [req.params.id], (err, post) => {
+      if (err) return res.status(500).json({ error: 'Error del servidor' });
+      if (!post) return res.status(404).json({ error: 'Post no encontrado' });
+      
+      // Si es owner o admin, puede editar cualquier post
+      if (req.user.role === 'owner' || req.user.role === 'admin') {
+        return next();
+      }
+      
+      // Si es user normal, solo puede editar sus propios posts
+      if (post.author_id !== req.user.id) {
+        return res.status(403).json({ error: 'No tienes permiso para editar este post' });
+      }
+      
+      next();
+    });
+  },
   [
     body('title').trim().notEmpty().withMessage('El título es requerido'),
     body('content').trim().notEmpty().withMessage('El contenido es requerido'),
@@ -156,6 +193,25 @@ router.put('/:id',
 // Eliminar un post (requiere autenticación)
 router.delete('/:id',
   authenticateToken,
+  (req, res, next) => {
+    // Verificar si es owner, admin, o el autor del post
+    db.get('SELECT author_id FROM posts WHERE id = ?', [req.params.id], (err, post) => {
+      if (err) return res.status(500).json({ error: 'Error del servidor' });
+      if (!post) return res.status(404).json({ error: 'Post no encontrado' });
+      
+      // Si es owner o admin, puede eliminar cualquier post
+      if (req.user.role === 'owner' || req.user.role === 'admin') {
+        return next();
+      }
+      
+      // Si es user normal, solo puede eliminar sus propios posts
+      if (post.author_id !== req.user.id) {
+        return res.status(403).json({ error: 'No tienes permiso para eliminar este post' });
+      }
+      
+      next();
+    });
+  },
   (req, res) => {
     db.get('SELECT * FROM posts WHERE id = ? AND author_id = ?', [req.params.id, req.user.id], (err, post) => {
       if (err) return res.status(500).json({ error: 'Error del servidor' });

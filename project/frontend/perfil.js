@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   loadProfile();
+  loadPostsCount();
   initTabs();
   initProfileForm();
   initPasswordForm();
@@ -44,6 +45,24 @@ async function loadProfile() {
     }
   } catch (error) {
     console.error('Error:', error);
+  }
+}
+
+// Contar artículos del usuario
+async function loadPostsCount() {
+  const token = localStorage.getItem('token');
+  
+  try {
+    const response = await fetch(`${API_URL}/posts/my-count`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      document.getElementById('posts-count').textContent = data.count;
+    }
+  } catch (error) {
+    console.error('Error al contar posts:', error);
   }
 }
 

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -17,6 +19,22 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const session = require('express-session');
+const passport = require('passport');
+const oauthRoutes = require('./routes/oauth');
+
+app.use(session({
+  secret: 'tu-secreto-super-seguro-cambialo-en-produccion',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Después de app.use('/api/posts', postRoutes);
+app.use('/api/auth', oauthRoutes);
 
 // Servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, '../frontend')));

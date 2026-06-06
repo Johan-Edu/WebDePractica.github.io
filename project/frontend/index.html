@@ -217,6 +217,9 @@ function updateNav() {
 
   if (token && user) {
     authButtons.innerHTML = `
+      <a href="posts.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
+        <i class="ph ph-article"></i> Artículos
+      </a>
       <a href="crear-post.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
         <i class="ph ph-plus-circle"></i> Crear Post
       </a>
@@ -229,6 +232,9 @@ function updateNav() {
     `;
   } else {
     authButtons.innerHTML = `
+      <a href="posts.html" style="color: var(--text-muted); margin-right: 12px; font-weight: 500;">
+        <i class="ph ph-article"></i> Artículos
+      </a>
       <a href="login.html" class="btn-nav">Iniciar sesión</a>
     `;
   }
@@ -237,6 +243,7 @@ function updateNav() {
   // Ejecutar al cargar
   updateNav();
 </script>
+<script src="auth.js"></script>
 
 </body>
 </html>

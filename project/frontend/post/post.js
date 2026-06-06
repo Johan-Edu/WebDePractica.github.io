@@ -32,13 +32,15 @@ function updateNav() {
   }
 }
 
+
+
 async function loadPost(id) {
   const article = document.getElementById('post-article');
   const loading = document.getElementById('loading');
   const error = document.getElementById('error');
 
   try {
-    const response = await fetch(`/api/posts/${id}`);
+    const response = await fetch(`${window.location.origin}/api/posts/${id}`);
 
     if (!response.ok) {
       throw new Error('Post not found');
@@ -61,7 +63,7 @@ async function loadPost(id) {
 
     // Verificar si el usuario actual es el autor
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    const isAuthor = currentUser && post.author_id === currentUser.id;
+    const isAuthor = currentUser && (post.author_id === currentUser.id || currentUser.role === 'owner' || currentUser.role === 'admin');
 
     article.innerHTML = `
       <header class="post-header" style="background: ${gradient};">
@@ -116,7 +118,7 @@ async function deletePost(id) {
   const token = localStorage.getItem('token');
 
   try {
-    const response = await fetch(`/api/posts/${id}`, {
+      const response = await fetch(`${window.location.origin}/api/posts/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`
